@@ -7,12 +7,17 @@ import SubMenu from 'antd/lib/menu/SubMenu'
 
 const { Sider } = Layout
 
-function Sidebar(props: SiderProps) {
+interface SidebarProps extends SiderProps {
+  isMobile?: boolean
+}
+
+function Sidebar(props: SidebarProps) {
+  const { isMobile, collapsed, onCollapse } = props
   const { pathname } = window.location
 
   const navigationsMap: { [key: string]: any } = {}
 
-  // add all parent node
+  // add all parent node to navigationsMap
   routes.forEach((menu) => {
     if (!menu.menuParentId) {
       navigationsMap[menu.id] = { ...menu }
@@ -32,10 +37,17 @@ function Sidebar(props: SiderProps) {
 
   const navigations = Object.values(navigationsMap)
 
-  const selectedNav = routes.find((item) => item.route === pathname)
+  const selectedNav = routes.find((item) => item.path === pathname)
 
   return (
-    <Sider width={256} collapsible trigger={null} breakpoint="xl" {...props}>
+    <Sider
+      width={256}
+      collapsible
+      trigger={null}
+      breakpoint="xl"
+      collapsed={collapsed}
+      onCollapse={onCollapse}
+    >
       <div className="flex flex-col h-screen">
         <div className="h-16  text-white flex items-center justify-center font-semibold">
           CoBank
@@ -47,8 +59,9 @@ function Sidebar(props: SiderProps) {
             mode="inline"
             selectedKeys={selectedNav ? [selectedNav.id] : undefined}
             onClick={() =>
-              props.onCollapse &&
-              props.onCollapse(props.collapsed ? false : true, 'clickTrigger')
+              onCollapse &&
+              isMobile &&
+              onCollapse(props.collapsed ? false : true, 'clickTrigger')
             }
             defaultOpenKeys={
               selectedNav && selectedNav.menuParentId
@@ -63,7 +76,7 @@ function Sidebar(props: SiderProps) {
               if (!children) {
                 return (
                   <Menu.Item key={nav.id} icon={<nav.icon />}>
-                    <Link to={nav.route}>{nav.name}</Link>
+                    <Link to={nav.path}>{nav.name}</Link>
                   </Menu.Item>
                 )
               }
@@ -73,7 +86,7 @@ function Sidebar(props: SiderProps) {
                 <SubMenu key={nav.id} icon={<nav.icon />} title={nav.name}>
                   {children.map((sub: any) => (
                     <Menu.Item key={sub.id} icon={<sub.icon />}>
-                      <Link to={sub.route}>{sub.name}</Link>
+                      <Link to={sub.path}>{sub.name}</Link>
                     </Menu.Item>
                   ))}
                 </SubMenu>
@@ -82,7 +95,7 @@ function Sidebar(props: SiderProps) {
           </Menu>
         </div>
 
-        {!props.collapsed && (
+        {!collapsed && (
           <div className="text-gray-500	h-16 flex items-center justify-center truncate">
             coBank Team @ 2021
           </div>

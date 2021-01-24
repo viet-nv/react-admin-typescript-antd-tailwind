@@ -7,13 +7,14 @@ import {
   BarChartOutlined,
 } from '@ant-design/icons'
 import Dashboard from 'components/Dashboard'
+import { Route } from 'types'
 
-const routes = [
+const routes: Route[] = [
   {
     id: '1',
     icon: DashboardOutlined,
     name: 'Dashboard',
-    route: '/',
+    path: '/',
     component: Dashboard,
   },
 
@@ -26,14 +27,14 @@ const routes = [
     id: '21',
     breadcrumbParentId: '1',
     menuParentId: '2',
-    route: '/users',
+    path: '/users',
     component: Dashboard,
     icon: UnorderedListOutlined,
     name: 'User List',
   },
   {
     id: '22',
-    route: '/users/:id',
+    path: '/users/:id',
     menuParentId: '-1',
     breadcrumbParentId: '21',
     component: Dashboard,
@@ -41,7 +42,7 @@ const routes = [
   },
   {
     id: '23',
-    route: '/users/statistic',
+    path: '/users/statistic',
     breadcrumbParentId: '21',
     menuParentId: '2',
     component: Dashboard,
@@ -51,7 +52,7 @@ const routes = [
 
   {
     id: '3',
-    route: '/settings',
+    path: '/settings',
     breadcrumbParentId: '1',
     component: Dashboard,
     icon: SettingOutlined,
@@ -65,19 +66,21 @@ const routes = [
   },
   {
     id: '41',
-    route: '/groups',
+    path: '/groups',
     name: 'Group List',
     menuParentId: '4',
     breadcrumbParentId: '1',
     icon: GroupOutlined,
+    component: Dashboard,
   },
   {
     id: '42',
-    route: '/groups/import',
+    path: '/groups/import',
     name: 'Import Group',
     menuParentId: '4',
     breadcrumbParentId: '41',
     icon: GroupOutlined,
+    component: Dashboard,
   },
 ]
 
