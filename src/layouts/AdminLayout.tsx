@@ -15,8 +15,8 @@ function AdminLayout() {
 
   const toggleCollapse = () => setCollapsed((prev) => !prev)
 
-  const handleClickMenu = ({ key }: any) => {
-    console.log(key)
+  const handleClickMenu = () => {
+    console.warn('Empty handleClickMenu')
   }
 
   return (
@@ -30,14 +30,14 @@ function AdminLayout() {
           placement="left"
           bodyStyle={{ padding: 0 }}
         >
-          <Sidebar collapsed={false} />
+          <Sidebar collapsed={false} onCollapse={toggleCollapse} />
         </Drawer>
       ) : (
         <Sidebar collapsed={collapsed} onCollapse={toggleCollapse} />
       )}
 
       <Layout>
-        <Header className="sticky top-0 border-b bg-white px-0 flex justify-between">
+        <Header className="sticky top-0 shadow-md bg-white px-0 flex justify-between">
           <div
             role="button"
             className="w-16 text-center cursor-pointer hover:bg-gray-200 text-blue-500 duration-300"
